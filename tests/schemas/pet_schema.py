@@ -1,5 +1,3 @@
-from unicodedata import category
-
 PET_SCHEMA = {
     "type": "object",
     "properties": {
