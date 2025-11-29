@@ -1,12 +1,18 @@
+import time
 import pytest
 import requests
 
 BASE_URL = "http://5.181.109.28:9090/api/v3"
 
+def generate_id():
+    return int(time.time() * 1000)
+
 @pytest.fixture(scope="function")
 def create_pet():
+    pet_id = generate_id()
+
     payload = {
-        "id": 1,
+        "id": pet_id,
         "name": "Buddy",
         "status": "available"
     }
@@ -16,10 +22,12 @@ def create_pet():
     return response.json()
 
 @pytest.fixture(scope="function")
-def create_order():
+def create_order(create_pet):
+    order_id = generate_id()
+
     payload = {
-        "id": 1,
-        "petId": 1,
+        "id": order_id,
+        "petId": create_pet["id"],
         "quantity": 1,
         "status": "placed",
         "complete": True

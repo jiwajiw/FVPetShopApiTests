@@ -34,16 +34,17 @@ class TestStore:
             assert response_json['complete'] == payload['complete'], "Not expected complete"
 
     @allure.title("Получение информации о заказе по ID")
-    def test_get_order_id(self):
+    def test_get_order_id(self, create_order):
         with allure.step(f"Отправка запроса на получение информации по id"):
-            response = requests.get(url=f'{BASE_URL}/store/order/1')
+            order_id = create_order["id"]
+            response = requests.get(url=f'{BASE_URL}/store/order/{order_id}')
             response_json = response.json()
 
         with allure.step("Проверка статуса ответа"):
             assert response.status_code == 200, "Not expected status code"
 
         with allure.step("Проверка данных заказа в ответе"):
-            assert response_json['id'] == 1, "Not expected id"
+            assert response_json['id'] == order_id, "Not expected id"
             assert isinstance(response_json, dict), "Not expected json"
 
     @allure.title("Удаление заказа по ID")
