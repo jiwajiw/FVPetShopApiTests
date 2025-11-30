@@ -1,11 +1,8 @@
-import time
 import pytest
 import requests
+from .utils import generate_id
 
 BASE_URL = "http://5.181.109.28:9090/api/v3"
-
-def generate_id():
-    return int(time.time() * 1000)
 
 @pytest.fixture(scope="function")
 def create_pet():
